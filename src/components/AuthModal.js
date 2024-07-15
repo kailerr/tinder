@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-const AuthModal = ({setShowModal}) => {
+const AuthModal = ({setShowModal, isSignUp}) => {
 
 const [email, setEmail] = useState(null)
 const [password, setPassword] = useState(null)
@@ -16,9 +16,19 @@ const handleClick = () => {
 
 const handleSubmit = (e) => {
     e.preventDefault()
+    try{
+        if (isSignUp && (password !== confirmPassword))
+            {
+                setError("Passwords don't match!")
+            }
+                console.log("send request to database")
+        
+    }
+    catch (error){
+        console.log (error)
+    }
 }
 
-const isSignUp = true
     return (
       <div className = "auth-modal">
         <div className = "close-icon" onClick = {handleClick}>
@@ -47,15 +57,15 @@ const isSignUp = true
             onChange ={(e) => setPassword(e.target.value)}
             />
 
-            <input
-            type="password-check"
+            {isSignUp && <input
+            type="password"
             id="password-check"
             name="password-check"
             placeholder="confirm password"
             required = {true}
             onChange ={(e) => setConfirmPassword(e.target.value)}
             />
-
+            }
             <input className = "secondary-button" type = "submit"/>
             <p>{error}</p>
 
